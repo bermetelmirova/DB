@@ -1,0 +1,29 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/layout/base.xhtml">
+    <style>
+        .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+    </style>
+    <ui:define name="content">
+        <h:form prependId="false">
+            <div class="my-3 col-1-3 col-4-12 " style="margin: 50px; text-align: center">
+                <p:growl/>
+                <p:panel header="Main">
+                    <p:panelGrid columns="2" layout="grid" style="border: none">
+                        <p:commandLink value="Attachment" action="attachment.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Customer" action="view/customer/customer.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Story" action="view/story/story.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Story back" action="view/story back/story_back.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Story group" action="view/story group/story_group.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Watched group" action="view/watched group story/watched_group_story.xhtml?faces-redirect=true"/>
+                        <p:commandLink value="Watched story" action="view/watched story/watched_story.xhtml?faces-redirect=true"/>
+                    </p:panelGrid>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

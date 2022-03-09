@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/layout/base.xhtml">
+    <style>
+        .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+    </style>
+    <ui:define name="content">
+        <div class="col-1-3 col-4-12" style="margin: 30px auto 0; text-align: center">
+            <h:form prependId="false">
+                <p:growl/>
+                <p:panel header="#{msgs.signPage}">
+                    <p:panelGrid columns="2" layout="grid" style="border: none">
+
+                        <p:outputLabel for="username" styleClass="p-d-block">#{msgs.username}</p:outputLabel>
+                        <p:inputText id="username" styleClass="p-d-block col-2-3" value="#{authBean.username}"/>
+
+                        <p:outputLabel for="password" styleClass="p-d-block">#{msgs.password}</p:outputLabel>
+                        <p:password id="password" styleClass="p-d-block col-2-3" value="#{authBean.password}"/>
+
+                        <p:outputLabel for="password" styleClass="p-d-block"/>
+                        <p:commandButton value="#{msgs.login}" action="#{authBean.function()}" styleClass="col-1-2"/>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </div>
+    </ui:define>
+</ui:composition>

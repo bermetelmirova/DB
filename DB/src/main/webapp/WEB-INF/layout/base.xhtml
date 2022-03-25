@@ -5,27 +5,27 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
-    <ui:insert name="metadata"/>
+<ui:insert name="metadata"/>
 
-    <f:view encoding="UTF-8">
-        <h:head>
-            <title>
-                <ui:insert name="title">Сервис по сторис</ui:insert>
-            </title>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-            <meta name="viewport"
-                  content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
+<f:view encoding="UTF-8">
+    <h:head>
+        <title>
+            <ui:insert name="title">Сервис по сторис</ui:insert>
+        </title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"/>
 
-            <ui:insert name="head"/>
-        </h:head>
+        <ui:insert name="head"/>
+    </h:head>
 
-        <h:body>
-            <f:facet name="last">
-                <h:outputStylesheet library="css" name="grid.css"/>
+    <h:body>
+        <f:facet name="last">
+            <h:outputStylesheet library="css" name="grid.css"/>
 
-                <h:outputScript library="js" value="jquery.min.js"/>
-            </f:facet>
-            <ui:insert name="content"/>
-        </h:body>
-    </f:view>
+            <h:outputScript library="js" value="jquery.min.js"/>
+        </f:facet>
+        <ui:insert name="content"/>
+    </h:body>
+</f:view>
 </html>

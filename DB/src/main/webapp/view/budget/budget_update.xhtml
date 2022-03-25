@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/layout/base.xhtml">
+    <style>
+        .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+    </style>
+    <ui:define name="content">
+        <h:form prependId="false">
+            <f:view>
+                <f:event type="preRenderView" listener="#{budgetBean.init}"/>
+            </f:view>
+            <div>
+                <p:menubar>
+                    <p:menuitem  outcome="/main.xhtml" icon="pi pi-fw pi-home">
+                    </p:menuitem>
+                    <p:menuitem value="Бюджет" outcome="/view/budget/budget_list.xhtml"/>
+                    <p:menuitem value="Закупка сырья" outcome="/view/buy raw/buy_raw_list.xhtml"/>
+                    <p:menuitem value="Сотрудники" outcome="/view/employee/employee_list.xhtml"/>
+                    <p:menuitem value="Ингридиенты" outcome="/view/ingredient/ingredient_list.xhtml"/>
+                    <p:menuitem value="Должности" outcome="/view/position/position_list.xhtml"/>
+                    <p:menuitem value="Производство" outcome="/view/production/production_list.xhtml"/>
+                    <p:menuitem value="Сырье" outcome="/view/raw/raw_list.xhtml"/>
+                    <p:menuitem value="Готовые продукты" outcome="/view/ready product/ready_product_list.xhtml"/>
+                    <p:menuitem value="Продажа продуктов" outcome="/view/sell product/sell_product_list.xhtml"/>
+                    <p:menuitem value="Велечины" outcome="/view/unit/unit_list.xhtml"/>
+                </p:menubar>
+            </div>
+
+            <div class="my-3 col-1-3 col-4-12 " style="margin: 50px; text-align: center">
+                <p:growl/>
+                <p:panel header="Добавить Бюджет">
+                    <p:panelGrid columns="2" layout="grid" style="border: none">
+                        <p:outputLabel for="sum" styleClass="p-d-block">Бюджет</p:outputLabel>
+                        <p:inputText value="#{budgetBean.budget.budgetSum}" id="sum" styleClass="p-d-block"/>
+                        <p:outputLabel for="bonus" styleClass="p-d-block">Бонусы</p:outputLabel>
+                        <p:inputText value="#{budgetBean.budget.bonus}" id="bonus" styleClass="p-d-block"/>
+                        <p:outputLabel for="percent" styleClass="p-d-block">Проценты</p:outputLabel>
+                        <p:inputText value="#{budgetBean.budget.percent}" id="percent" styleClass="p-d-block"/>
+                        <p:commandButton value="Назад" action="budget_list.xhtml?faces-redirect=true" update="@all"
+                                         style="float: centre" />
+                        <p:commandButton value="Обновить" action="#{budgetBean.update}" update="@all"
+                                         style="float: centre"/>
+                    </p:panelGrid>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

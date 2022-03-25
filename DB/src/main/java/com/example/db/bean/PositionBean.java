@@ -24,30 +24,32 @@ public class PositionBean {
     @Autowired
     private PositionService positionService;
 
-    private void init() {
+    public void init() {
         positions = positionService.getAll();
     }
 
-    private void create() {
+    public void create() {
         Position position = new Position();
         position.setPosition(positionName);
+        positionService.save(position);
+        clean();
     }
 
-    private void delete(Long id) {
+    public void delete(Long id) {
         positionService.deleteById(id);
     }
 
-    private String navigateToUpdate(Long id) {
+    public String navigateToUpdate(Long id) {
         position = positionService.getById(id);
         return "position_update.xhtml?faces-redirect=true";
     }
 
-    private void update() {
+    public void update() {
         positionService.update(position);
         position.setPosition(null);
     }
 
-    private void clean() {
+    public void clean() {
         positionName = null;
     }
 }

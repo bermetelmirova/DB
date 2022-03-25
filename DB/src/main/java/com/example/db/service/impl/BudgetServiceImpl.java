@@ -32,7 +32,7 @@ public class BudgetServiceImpl implements BudgetService {
         Budget budget = getById(entity.getId());
         budget.setBudgetSum(entity.getBudgetSum());
         budget.setBonus(entity.getBonus());
-        budget.setBonus(entity.getBonus());
+        budget.setPercent(entity.getPercent());
         return budgetRepository.save(budget);
     }
 

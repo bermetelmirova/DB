@@ -20,17 +20,23 @@ public class PositionServiceImpl implements PositionService {
 
     @Override
     public Position deleteById(Long id) {
-        return null;
+        Position position = getById(id);
+        if(position==null)
+            throw new NullPointerException();
+        positionRepository.deleteById(id);
+        return position;
     }
 
     @Override
     public Position update(Position entity) {
-        return null;
+        Position position = getById(entity.getId());
+        position.setPosition(entity.getPosition());
+        return positionRepository.save(position);
     }
 
     @Override
     public List<Position> getAll() {
-        return null;
+        return positionRepository.findAll();
     }
 
     @Override

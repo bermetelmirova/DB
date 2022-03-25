@@ -3,16 +3,20 @@ package com.example.db.bean;
 import com.example.db.entity.BuyRaw;
 import com.example.db.entity.Employee;
 import com.example.db.entity.Raw;
+import com.example.db.exception.BudgetException;
 import com.example.db.service.BuyRawService;
 import com.example.db.service.EmployeeService;
 import com.example.db.service.RawService;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,33 +43,43 @@ public class BuyRawBean {
     @Autowired
     private BuyRawService buyRawService;
 
-    private void init() {
+    public void init() {
         buyRaws = buyRawService.getAll();
         employees = employeeService.getAll();
         raws = rawService.getAll();
     }
 
-    private void create() {
+    public void create() {
         BuyRaw buyRaw = new BuyRaw();
         buyRaw.setSum(sum);
         buyRaw.setRaw(rawService.getById(rawId));
         buyRaw.setEmployee(employeeService.getById(employeeId));
         buyRaw.setDate(date);
         buyRaw.setAmount(amount);
+        try{
         buyRawService.save(buyRaw);
-        clean();
+        }catch(BudgetException budgetException){
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Exception",budgetException.getMessage()));
+            PrimeFaces.current().ajax().update("messages");
+        }finally {
+            clean();
+        }
+
     }
 
-    private void delete(Long id) {
+    public void delete(Long id) {
         buyRawService.deleteById(id);
     }
 
-    private String navigateToUpdate(Long id) {
+    public String navigateToUpdate(Long id) {
         buyRaw = buyRawService.getById(id);
         return "budget_update.xhtml?faces-redirect=true";
     }
 
-    private void update() {
+    public void update() {
+        buyRaw.setRaw(rawService.getById(rawId));
+        buyRaw.setEmployee(employeeService.getById(employeeId));
         buyRawService.update(buyRaw);
         buyRaw.setSum(null);
         buyRaw.setRaw(null);

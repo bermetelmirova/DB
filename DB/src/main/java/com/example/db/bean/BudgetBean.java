@@ -8,29 +8,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import java.util.List;
 
 @Component
 @ManagedBean
-@SessionScoped
-@Getter
-@Setter
+@ViewScoped
 public class BudgetBean {
+    @Getter
+    @Setter
     private Float budgetSum;
-    private Double bonus;
-    private Double percent;
+    @Getter
+    @Setter
+    private Float bonus;
+    @Getter
+    @Setter
+    private Float percent;
+    @Getter
+    @Setter
     private Budget budget;
+    @Getter
+    @Setter
     private List<Budget> budgets;
 
     @Autowired
     private BudgetService budgetService;
 
-    private void init() {
+    public void init() {
         budgets = budgetService.getAll();
     }
 
-    private void create() {
+    public void create() {
         Budget budget = new Budget();
         budget.setBonus(bonus);
         budget.setBudgetSum(budgetSum);
@@ -39,20 +47,18 @@ public class BudgetBean {
         clean();
     }
 
-    private void delete(Long id) {
+    public void delete(Long id) {
         budgetService.deleteById(id);
     }
 
-    private String navigateToUpdate(Long id) {
+    public String navigateToUpdate(Long id) {
         budget = budgetService.getById(id);
         return "budget_update.xhtml?faces-redirect=true";
     }
 
-    private void update() {
+    public void update() {
         budgetService.update(budget);
-        budget.setBudgetSum(null);
-        budget.setBonus(null);
-        budget.setPercent(null);
+        budget = new Budget();
     }
 
     private void clean() {

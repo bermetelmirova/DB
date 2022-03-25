@@ -1,6 +1,7 @@
 package com.example.db.bean;
 
 import com.example.db.entity.Raw;
+import com.example.db.entity.Unit;
 import com.example.db.service.RawService;
 import com.example.db.service.UnitService;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class RawBean implements BeanService{
     private Integer amount;
     private Raw raw;
     private List<Raw> raws;
+    private List<Unit> units;
 
     @Autowired
     private RawService rawService;
@@ -33,6 +35,7 @@ public class RawBean implements BeanService{
     @Override
     public void init() {
         raws = rawService.getAll();
+        units = unitService.getAll();
     }
 
     @Override
@@ -59,6 +62,7 @@ public class RawBean implements BeanService{
 
     @Override
     public void update() {
+        raw.setUnit(unitService.getById(unitId));
         rawService.update(raw);
         raw.setPrice(null);
         raw.setAmount(null);

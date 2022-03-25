@@ -33,12 +33,13 @@ public class EmployeeBean {
     @Autowired
     private PositionService positionService;
 
-    private void init() {
+
+    public void init() {
         employees = employeeService.getAll();
         positions = positionService.getAll();
     }
 
-    private void create() {
+    public void create() {
         Employee employee = new Employee();
         employee.setAddress(address);
         employee.setPosition(positionService.getById(positionId));
@@ -49,17 +50,18 @@ public class EmployeeBean {
         clean();
     }
 
-    private void delete(Long id) {
+    public void delete(Long id) {
         employeeService.deleteById(id);
     }
 
-    private String navigateToUpdate(Long id) {
+    public String navigateToUpdate(Long id) {
         employee = employeeService.getById(id);
         return "employee_update.xhtml?faces-redirect=true";
     }
 
-    private void update() {
-        employeeService.update(null);
+    public void update() {
+        employee.setPosition(positionService.getById(positionId));
+        employeeService.update(employee);
         employee.setAddress(null);
         employee.setPosition(null);
         employee.setPhoneNumber(null);
@@ -67,11 +69,12 @@ public class EmployeeBean {
         employee.setPayment(null);
     }
 
-    private void clean() {
+    public void clean() {
         fullName = null;
         positionId = null;
         payment = null;
         address = null;
         phoneNumber = null;
     }
+
 }

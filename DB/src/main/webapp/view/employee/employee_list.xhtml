@@ -1,0 +1,88 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/layout/base.xhtml">
+    <style>
+        .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+    </style>
+    <ui:define name="content">
+        <h:form prependId="false">
+            <f:view>
+                <f:event type="preRenderView" listener="#{employeeBean.init}"/>
+            </f:view>
+
+            <div>
+                <div>
+                    <p:menubar>
+                        <p:menuitem  outcome="/main.xhtml" icon="pi pi-fw pi-home">
+                        </p:menuitem>
+                        <p:menuitem value="Бюджет" outcome="/view/budget/budget_list.xhtml"/>
+                        <p:menuitem value="Закупка сырья" outcome="/view/buy raw/buy_raw_list.xhtml"/>
+                        <p:menuitem value="Сотрудники" outcome="/view/employee/employee_list.xhtml"/>
+                        <p:menuitem value="Ингридиенты" outcome="/view/ingredient/ingredient_list.xhtml"/>
+                        <p:menuitem value="Должности" outcome="/view/position/position_list.xhtml"/>
+                        <p:menuitem value="Производство" outcome="/view/production/production_list.xhtml"/>
+                        <p:menuitem value="Сырье" outcome="/view/raw/raw_list.xhtml"/>
+                        <p:menuitem value="Готовые продукты" outcome="/view/ready product/ready_product_list.xhtml"/>
+                        <p:menuitem value="Продажа продуктов" outcome="/view/sell product/sell_product_list.xhtml"/>
+                        <p:menuitem value="Велечины" outcome="/view/unit/unit_list.xhtml"/>
+                    </p:menubar>
+                </div>
+            </div>
+
+            <p:growl id="messages" showDetail="true"/>
+            <p:commandButton icon="pi pi-plus" value="Добавить" styleClass="rounded-button ui-button-success"
+                             action="employee.xhtml?faces-redirect=true" update="@all"
+                             style="float: centre">
+            </p:commandButton>
+            <div class="col-1-1">
+                <p:dataTable var="employee" value="#{employeeBean.employees}">
+                    <f:facet name="header">
+                        <span style="font-weight: bold">Сотрудники</span>
+                    </f:facet>
+
+                    <p:column headerText="ID">
+                        <h:outputText value="#{employee.id}"/>
+                    </p:column>
+
+                    <p:column headerText="ФИО">
+                        <h:outputText value="#{employee.fullName}"/>
+                    </p:column>
+
+                    <p:column headerText="Должность">
+                        <h:outputText value="#{employee.position.position}"/>
+                    </p:column>
+
+                    <p:column headerText="Адрес">
+                        <h:outputText value="#{employee.address}"/>
+                    </p:column>
+
+                    <p:column headerText="Зарплата">
+                        <h:outputText value="#{employee.payment}"/>
+                    </p:column>
+
+                    <p:column headerText="Номер телефона">
+                        <h:outputText value="#{employee.phoneNumber}"/>
+                    </p:column>
+
+                    <p:column style="width:auto;text-align: center">
+                        <p:commandButton icon="pi pi-trash" styleClass="rounded-button ui-button-danger" process="@this"
+                                         actionListener="#{employeeBean.delete(employee.id)}" update="@all"
+                                         style="float: centre">
+                        </p:commandButton>
+                    </p:column>
+
+                    <p:column style="width:auto;text-align: center">
+                        <p:commandButton icon="pi pi-pencil" styleClass="rounded-button ui-button-success" process="@this"
+                                         action="#{employeeBean.navigateToUpdate(employee.id)}">
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

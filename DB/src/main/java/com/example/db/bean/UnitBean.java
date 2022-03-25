@@ -2,10 +2,20 @@ package com.example.db.bean;
 
 import com.example.db.entity.Unit;
 import com.example.db.service.UnitService;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import java.util.List;
 
+@Component
+@ManagedBean
+@SessionScoped
+@Getter
+@Setter
 public class UnitBean implements BeanService {
 
     private String valueName;
@@ -24,6 +34,8 @@ public class UnitBean implements BeanService {
     public void create() {
         Unit unit = new Unit();
         unit.setValueName(valueName);
+        unitService.save(unit);
+        clean();
     }
 
     @Override

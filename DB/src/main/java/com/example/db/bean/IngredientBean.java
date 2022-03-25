@@ -34,13 +34,13 @@ public class IngredientBean {
     @Autowired
     private ReadyProductService readyProductService;
 
-    private void init() {
+    public void init() {
         ingredients = ingredientService.getAll();
         raws = rawService.getAll();
         readyProducts = readyProductService.getAll();
     }
 
-    private void create() {
+    public void create() {
         Ingredient ingredient = new Ingredient();
         ingredient.setReadyProduct(readyProductService.getById(readyProductId));
         ingredient.setRaw(rawService.getById(rawId));
@@ -49,23 +49,25 @@ public class IngredientBean {
         clean();
     }
 
-    private void delete(Long id) {
+    public void delete(Long id) {
         ingredientService.deleteById(id);
     }
 
-    private String navigateToUpdate(Long id) {
+    public String navigateToUpdate(Long id) {
         ingredient = ingredientService.getById(id);
-        return "employee_update.xhtml?faces-redirect=true";
+        return "ingredient_update.xhtml?faces-redirect=true";
     }
 
-    private void update() {
+    public void update() {
+        ingredient.setReadyProduct(readyProductService.getById(readyProductId));
+        ingredient.setRaw(rawService.getById(rawId));
         ingredientService.update(ingredient);
         ingredient.setAmount(null);
         ingredient.setRaw(null);
         ingredient.setReadyProduct(null);
     }
 
-    private void clean() {
+    public void clean() {
         readyProductId = null;
         rawId = null;
         amount = null;

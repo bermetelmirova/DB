@@ -3,7 +3,6 @@ package com.example.db.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "budget")
@@ -22,8 +21,8 @@ public class Budget {
     private Float budgetSum;
 
     @Column(name = "bonus")
-    private Double bonus;
+    private Float bonus;
 
     @Column(name = "percent_amount")
-    private Double percent;
+    private Float percent;
 }

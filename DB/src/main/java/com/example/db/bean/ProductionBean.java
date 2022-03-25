@@ -1,16 +1,22 @@
 package com.example.db.bean;
 
+import com.example.db.entity.Employee;
 import com.example.db.entity.Production;
+import com.example.db.entity.ReadyProduct;
+import com.example.db.exception.RawException;
 import com.example.db.service.EmployeeService;
 import com.example.db.service.ProductionService;
 import com.example.db.service.ReadyProductService;
 import lombok.Getter;
 import lombok.Setter;
+import org.primefaces.PrimeFaces;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,6 +32,8 @@ public class ProductionBean implements BeanService{
     private Long employeeId;
     private Production production;
     private List<Production> productions;
+    private List<Employee> employees;
+    private List<ReadyProduct> readyProducts;
 
     @Autowired
     private ProductionService productionService;
@@ -38,6 +46,8 @@ public class ProductionBean implements BeanService{
     @Override
     public void init() {
         productions = productionService.getAll();
+        employees = employeeService.getAll();
+        readyProducts = readyProductService.getAll();
     }
 
     @Override
@@ -47,7 +57,14 @@ public class ProductionBean implements BeanService{
         production.setReadyProduct(readyProductService.getById(readyProductId));
         production.setEmployee(employeeService.getById(employeeId));
         production.setAmount(amount);
-        productionService.save(production);
+        try {
+            productionService.save(production);
+        }catch (RawException e){
+            FacesContext.getCurrentInstance().addMessage(null,
+                    new FacesMessage("Exception",e.getMessage()));
+            PrimeFaces.current().ajax().update("messages");
+        }
+
         clean();
     }
 
@@ -64,6 +81,8 @@ public class ProductionBean implements BeanService{
 
     @Override
     public void update() {
+        production.setReadyProduct(readyProductService.getById(readyProductId));
+        production.setEmployee(employeeService.getById(employeeId));
         productionService.update(production);
         production.setAmount(null);
         production.setEmployee(null);

@@ -1,6 +1,7 @@
 package com.example.db.bean;
 
 import com.example.db.entity.ReadyProduct;
+import com.example.db.entity.Unit;
 import com.example.db.service.ReadyProductService;
 import com.example.db.service.UnitService;
 import lombok.Getter;
@@ -24,6 +25,7 @@ public class ReadyProductBean implements BeanService {
     private Integer amount;
     private ReadyProduct readyProduct;
     private List<ReadyProduct> readyProducts;
+    private List<Unit> units;
 
     @Autowired
     private ReadyProductService readyProductService;
@@ -33,6 +35,7 @@ public class ReadyProductBean implements BeanService {
     @Override
     public void init() {
         readyProducts = readyProductService.getAll();
+        units = unitService.getAll();
     }
 
     @Override
@@ -43,6 +46,7 @@ public class ReadyProductBean implements BeanService {
         readyProduct.setAmount(amount);
         readyProduct.setPrice(price);
         readyProductService.save(readyProduct);
+        clean();
     }
 
     @Override

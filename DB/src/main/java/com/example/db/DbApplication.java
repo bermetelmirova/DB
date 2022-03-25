@@ -16,9 +16,9 @@ public class DbApplication {
         SpringApplication.run(DbApplication.class, args);
     }
     @Bean
-    ServletRegistrationBean<FacesServlet> jsfServletRegistration(ServletContext servletContext) {
+    ServletRegistrationBean jsfServletRegistration (ServletContext servletContext) {
         servletContext.setInitParameter("com.sun.faces.forceLoadConfiguration", Boolean.TRUE.toString());
-        ServletRegistrationBean<FacesServlet> srb = new ServletRegistrationBean<>();
+        ServletRegistrationBean srb = new ServletRegistrationBean();
         srb.setServlet(new FacesServlet());
         srb.setUrlMappings(Arrays.asList("*.xhtml"));
         srb.setLoadOnStartup(1);

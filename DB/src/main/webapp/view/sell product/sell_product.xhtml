@@ -1,0 +1,73 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui" xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/layout/base.xhtml">
+    <style>
+        .ui-panelgrid .ui-panelgrid-cell {
+            background-color: transparent;
+        }
+    </style>
+
+    <ui:define name="content">
+        <h:form prependId="false">
+
+            <f:view>
+                <f:event type="preRenderView" listener="#{sellProductBean.init}"/>
+            </f:view><f:metadata>
+        </f:metadata>
+
+            <div>
+                <p:menubar>
+                    <p:menuitem outcome="/main.xhtml" icon="pi pi-fw pi-home">
+                    </p:menuitem>
+                    <p:menuitem value="Бюджет" outcome="/view/budget/budget_list.xhtml"/>
+                    <p:menuitem value="Закупка сырья" outcome="/view/buy raw/buy_raw_list.xhtml"/>
+                    <p:menuitem value="Сотрудники" outcome="/view/employee/employee_list.xhtml"/>
+                    <p:menuitem value="Ингридиенты" outcome="/view/ingredient/ingredient_list.xhtml"/>
+                    <p:menuitem value="Должности" outcome="/view/position/position_list.xhtml"/>
+                    <p:menuitem value="Производство" outcome="/view/production/production_list.xhtml"/>
+                    <p:menuitem value="Сырье" outcome="/view/raw/raw_list.xhtml"/>
+                    <p:menuitem value="Готовые продукты" outcome="/view/ready product/ready_product_list.xhtml"/>
+                    <p:menuitem value="Продажа продуктов" outcome="/view/sell product/sell_product_list.xhtml"/>
+                    <p:menuitem value="Велечины" outcome="/view/unit/unit_list.xhtml"/>
+                </p:menubar>
+            </div>
+            <p:growl id="messages" showDetail="true"/>
+            <div class="my-3 col-1-3 col-4-12 " style="margin: 50px; text-align: center">
+                <p:panel id="panel" header="Продать продукт">
+                    <p:panelGrid columns="2" layout="grid" style="border: none">
+
+                        <p:outputLabel for="raw" styleClass="p-d-block">Продукт</p:outputLabel>
+                        <p:selectOneMenu id="raw" value="#{sellProductBean.readyProductId}" style="width:200px">
+                            <f:selectItem itemLabel="Продукт" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{sellProductBean.readyProducts}" var="readyProduct"
+                                           itemLabel="#{readyProduct.product}" itemValue="#{readyProduct.id}"/>
+                            <p:ajax event="focus" listener="#{sellProductBean.setPrice}" update="percent"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="bonus" styleClass="p-d-block">Количество</p:outputLabel>
+                        <p:inputText value="#{sellProductBean.amount}" id="bonus" styleClass="p-d-block"/>
+
+                        <p:outputLabel for="percent" styleClass="p-d-block">Стоимость</p:outputLabel>
+                        <p:inputText value="#{sellProductBean.sum}" id="percent" styleClass="p-d-block"/>
+
+                        <p:outputLabel for="employee" styleClass="p-d-block">Сотрудник</p:outputLabel>
+                        <p:selectOneMenu id="employee" value="#{sellProductBean.employeeId}" style="width:200px">
+                            <f:selectItem itemLabel="Сотрудник" itemValue="" noSelectionOption="true"/>
+                            <f:selectItems value="#{sellProductBean.employees}" var="employee"
+                                           itemLabel="#{employee.fullName}" itemValue="#{employee.id}"/>
+                        </p:selectOneMenu>
+                        <p:outputLabel for="basic" value="Дата"/>
+                        <p:datePicker id="basic" value="#{sellProductBean.date}"/>
+                        <p:commandButton value="Назад" action="sell_product_list.xhtml?faces-redirect=true"
+                                         update="@all"
+                                         style="float: centre"/>
+                        <p:commandButton value="Добавить" action="#{sellProductBean.create}" update="panel"
+                                         style="float: centre"/>
+                    </p:panelGrid>
+                </p:panel>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

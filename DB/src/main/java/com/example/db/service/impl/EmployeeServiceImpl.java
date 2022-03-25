@@ -30,11 +30,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Employee update(Employee entity) {
         Employee employee = getById(entity.getId());
-        employee.setAddress(employee.getAddress());
-        employee.setFullName(employee.getFullName());
-        employee.setPayment(employee.getPayment());
-        employee.setPosition(employee.getPosition());
-        employee.setPhoneNumber(employee.getPhoneNumber());
+        employee.setAddress(entity.getAddress());
+        employee.setFullName(entity.getFullName());
+        employee.setPayment(entity.getPayment());
+        employee.setPosition(entity.getPosition());
+        employee.setPhoneNumber(entity.getPhoneNumber());
         return employeeRepository.save(employee);
     }
 
